@@ -13,7 +13,7 @@ This is a proof of concept, and it works on the droid. It is the first step of a
 ```
 
 - **Raspberry Pi 4** (or a PC) runs `poc/dome_tracker_poc.py`: OpenCV's YuNet face detector, then a speed controller.
-- **Mega ADK** runs [ShadowMD Lite](https://github.com/Fernando-Beltran/ShadowMDLite) with `ENABLE_DOME_TRACKER 1` (branch `droid`). It accepts `DM:<speed>` on the USB serial port and turns the dome at that speed.
+- **Mega ADK** runs [ShadowMD Lite](https://github.com/Fernando-Beltran/ShadowMDLite) with `ENABLE_DOME_TRACKER 1` (branch [`droid`](https://github.com/Fernando-Beltran/ShadowMDLite/tree/droid)). It accepts `DM:<speed>` on the USB serial port and turns the dome at that speed.
 
 ### Safety, in the firmware
 - The dome stops if no `DM:` arrives for 300 ms (Pi off, script crashed, cable out).
