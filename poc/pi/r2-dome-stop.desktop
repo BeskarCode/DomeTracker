@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Parar Dome Tracker
+Comment=Stop the dome tracker (the dome stays still)
+Exec=/home/fernando/dome/pi/dome-stop.sh
+Icon=process-stop
+Terminal=false

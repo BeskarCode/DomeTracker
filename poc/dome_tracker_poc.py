@@ -181,6 +181,13 @@ WEB_PAGE = """<!doctype html>
 <body>
   <img class="logo" src="/logo.png" alt="Astromech Spain">
   <img class="cam" src="/stream" alt="camera">
+  <script>
+    // If the tracker restarts, the video stops: reload the page once it answers again.
+    let down = false;
+    setInterval(() => fetch("/", {cache: "no-store"})
+      .then(() => { if (down) location.reload(); })
+      .catch(() => { down = true; }), 2000);
+  </script>
 </body></html>
 """
 

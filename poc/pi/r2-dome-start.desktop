@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=R2 Dome Tracker
+Comment=Start the dome tracker and show the camera
+Exec=/home/fernando/dome/pi/dome-start.sh
+Icon=/home/fernando/dome/assets/astromech_spain_icon.png
+Terminal=false

@@ -1,0 +1,3 @@
+# Lets the desktop shortcuts start and stop the tracker without asking for a password.
+# Install: sudo install -m 440 sudoers-dome-tracker /etc/sudoers.d/dome-tracker
+fernando ALL=(root) NOPASSWD: /usr/bin/systemctl start dome-tracker, /usr/bin/systemctl stop dome-tracker, /usr/bin/systemctl restart dome-tracker
