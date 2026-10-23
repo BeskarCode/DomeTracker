@@ -24,9 +24,18 @@ El objetivo a largo plazo es un droide que se mueva solo por una habitación o q
 
 **Estado:** probado en el droide. El dome me sigue a izquierda y derecha, todo desde la Pi y con el Nav al mando. El límite es el cable de la webcam en el dome.
 
-**Lo siguiente:**
-- una cámara inalámbrica en el dome (ESP32-S3 con cámara de 120°, alimentada con los 12 V del slip ring);
-- un sensor de ángulo del dome;
-- después, que el droide entero te siga.
+**Lo siguiente: quitar el cable.** Le di vueltas a tres opciones:
+- **La misma webcam USB por el slip ring:** tengo 3 cables libres, pero van sin apantallar junto a los 12 V, y el USB 2.0 no lo aguantaría bien.
+- **Una cámara ESP32-S3 por WiFi:** barata, pero no le da para detectar caras de lejos, y enviar el vídeo añade 100–200 ms de retraso, justo lo que hacía que el dome se pasara.
+- **Una Raspberry Pi Zero 2 W con Camera Module 3 Wide (120°) en el dome:** detecta ella misma y solo envía a la Pi 4 "cara a +12°" por esos 3 cables, como enlace serie lento (RS-485 para que no le afecte el ruido). Sin WiFi y casi sin retraso. **Esta es la elegida.**
+
+**Material de la siguiente versión** (precios aproximados):
+- Pi Zero 2 W + microSD: ~26 €
+- Camera Module 3 Wide + cable de cámara para Zero: ~43 €
+- Regulador 12 V → 5 V 3 A en el dome, con fusible: ~15 €
+- 2 módulos RS-485 de 3,3 V (MAX3485): ~4 €
+- Regulador a 5 V para la Pi 4 desde la batería, con fusible: ~15 €
+
+En total, unos 100 €. Más adelante, una segunda Zero detrás para que el dome se gire cuando pasas por su espalda, un sensor de ángulo del dome, y después que el droide entero te siga.
 
 El código todavía no es público; pondré los enlaces cuando lo sea.

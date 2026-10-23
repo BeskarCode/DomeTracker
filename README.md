@@ -62,7 +62,7 @@ sudo systemctl stop dome-tracker     # stop it
 
 ## What is next
 
-- **Wireless camera on the dome:** an ESP32-S3 with an OV2640/OV3660 120° camera streaming over WiFi to the Pi, instead of a USB cable that limits how far the dome can turn.
+- **A camera that turns with the dome:** a Raspberry Pi Zero 2 W with a Camera Module 3 Wide in the dome detects the face itself and sends the bearing to the Pi 4 over three spare slip ring wires (RS-485), instead of a USB cable that limits how far the dome can turn. Parts in [docs/BOM.md](docs/BOM.md).
 - **Dome angle sensor** (AS5600 on the slip ring axis), for a real "front".
 - **The droid follows you**, then **moves around a room** (lidar, ROS 2).
 

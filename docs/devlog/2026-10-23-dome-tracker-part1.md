@@ -67,10 +67,42 @@ On the droid: the dome follows me left and right at a natural speed, with the PS
 
 The obvious limit is the cable: a USB webcam on the dome means the dome cannot keep turning the same way. It also only knows faces, so it loses you when you turn your back.
 
-## Next
+## Next: a camera that turns with the dome
 
-- **A wireless camera on the dome:** an ESP32-S3 with a 120° OV2640 or OV3660 camera, powered from the 12 V that already goes up the slip ring, streaming over WiFi to the Pi. The Pi keeps doing the detection, and the script barely changes.
+The cable has to go. I looked at three ways:
+
+- **The same USB webcam through the slip ring.** I have three spare wires, but they run unshielded next to the 12 V line, and USB 2.0 wants 480 Mbit/s on a proper twisted pair. Very unlikely to be reliable, and a short to 12 V would kill a USB port on the Pi.
+- **An ESP32-S3 camera streaming over WiFi.** Cheap and tiny, but too weak to detect faces at any distance itself, and streaming the video to the Pi adds 100 to 200 ms of lag. Lag is exactly what made the dome overshoot at the start.
+- **A Raspberry Pi Zero 2 W with a Camera Module 3 Wide (120°) in the dome.** It runs the same detector itself and sends only "face at +12°" to the Pi 4, a few bytes every 40 ms, over those three spare slip ring wires as a slow serial link (RS-485 to shrug off the noise from the 12 V wires). No WiFi, almost no lag. This is the one.
+
+The Pi 4 stays in the body as the brain: it takes the bearing from the dome, drives the Mega, and shows the picture. About 100 € to buy for one camera at the front; a second Zero at the back later would let the dome turn round when you walk behind it. The full list is below.
+
+After that:
+
 - **A dome angle sensor** (an AS5600 on the slip ring axis), for a real "front".
 - **Following with the whole droid**, and later moving around a room on its own with a lidar and ROS 2.
+
+## Bill of materials
+
+**What the proof of concept used** (all of it was already on the bench):
+
+| Part | ~€ |
+|---|---|
+| Raspberry Pi 4 Model B, 4 GB, with a 32 GB microSD | 70 |
+| Any USB webcam (UVC), taped to the dome | 15 |
+| USB cable Pi 4 to Mega ADK | 3 |
+| Mega ADK, USB Host Shield, SyRen, dome motor | already in the droid |
+
+**The next version** (camera turning with the dome, one at the front):
+
+| Part | ~€ |
+|---|---|
+| Raspberry Pi Zero 2 W (WH) + microSD | 26 |
+| Raspberry Pi Camera Module 3 Wide (120°) + Pi Zero camera cable | 43 |
+| Buck 12 V to 5 V 3 A in the dome, with an inline 1 A fuse | 12–18 |
+| 2 RS-485 modules, 3.3 V (MAX3485), one each end | 4 |
+| Buck from the droid battery to 5 V for the Pi 4, with fuse | 12–20 |
+
+Rough October 2026 prices. Optional later: a second Zero and camera for the back (~70 €), and an AS5600 with a magnet for the dome angle (~5 €).
 
 The code: the `DM:` command is on the `droid` branch of ShadowMD Lite, and the tracker is a new project, DomeTracker. Neither is public yet; links when they are.
