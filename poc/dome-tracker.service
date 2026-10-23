@@ -1,0 +1,21 @@
+[Unit]
+Description=R2 dome tracker (the dome turns to look at people)
+After=network.target
+
+[Service]
+User=fernando
+WorkingDirectory=/home/fernando/dome
+Environment=CAMERA=/dev/v4l/by-id/usb-GENERAL_GENERAL_WEBCAM_JH0319_20210712_v102-video-index0
+Environment=MEGA=/dev/serial/by-id/usb-Arduino__www.arduino.cc__0042_3343632343835131B2E2-if00
+# Keep DTR up when the port closes, so a restart of this service does not reset the Mega
+# (only the first open after the Pi boots does). "-" = carry on if the Mega is not plugged in.
+ExecStartPre=-/usr/bin/stty -F ${MEGA} -hupcl
+ExecStart=/home/fernando/dome-venv/bin/python -u dome_tracker_poc.py --camera ${CAMERA} --port ${MEGA} --headless --no-log --http 8080
+Restart=always
+RestartSec=10
+# SIGINT = Ctrl+C: the script sends DM:0 before closing
+KillSignal=SIGINT
+TimeoutStopSec=5
+
+[Install]
+WantedBy=multi-user.target
