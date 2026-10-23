@@ -176,12 +176,25 @@ WEB_PAGE = """<!doctype html>
   html, body { margin: 0; height: 100%; background: #0c1428; }
   body { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3vh; }
   img.logo { height: 10vh; max-width: 90vw; object-fit: contain; }
-  img.cam { max-height: 80vh; max-width: 96vw; border-radius: 8px; box-shadow: 0 0 40px #0008; }
+  img.cam { max-height: 76vh; max-width: 96vw; border-radius: 8px; box-shadow: 0 0 40px #0008; }
+  a.web { color: #c8d2e6; font: 2.2vh sans-serif; text-decoration: none; letter-spacing: .05em; }
+  a.web:hover { color: #fff; }
+  #close { display: none; position: fixed; top: 2vh; right: 2vh; padding: 1.2vh 2.4vh;
+           font: bold 2.2vh sans-serif; color: #fff; background: #c0392b; border: 0;
+           border-radius: 6px; cursor: pointer; }
 </style></head>
 <body>
-  <img class="logo" src="/logo.png" alt="Astromech Spain">
+  <a href="https://www.astromechspain.com/" target="_blank"><img class="logo" src="/logo.png" alt="Astromech Spain"></a>
   <img class="cam" src="/stream" alt="camera">
+  <a class="web" href="https://www.astromechspain.com/" target="_blank">www.astromechspain.com</a>
+  <button id="close" title="Cierra esta pantalla; el dome tracker sigue funcionando">Cerrar</button>
   <script>
+    // "Cerrar" only on the Pi's own monitor: it closes this full-screen window there.
+    const close = document.getElementById("close");
+    if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
+      close.style.display = "block";
+      close.onclick = () => fetch("/close", {method: "POST"});
+    }
     // If the tracker restarts, the video stops: reload the page once it answers again.
     let down = false;
     setInterval(() => fetch("/", {cache: "no-store"})
@@ -238,6 +251,16 @@ class WebView:
                         pass
                 else:
                     self.send_error(404)
+
+            def do_POST(self):
+                # The page's "Cerrar" button: closes the full-screen view on the Pi's monitor.
+                # Only from the Pi itself, so a phone watching the page cannot close it.
+                if self.path == "/close" and self.client_address[0] in ("127.0.0.1", "::1"):
+                    self.reply("text/plain", b"ok")
+                    import subprocess
+                    subprocess.run(["pkill", "-f", "chromium.*localhost:" + str(port)])
+                else:
+                    self.send_error(403)
 
         server = ThreadingHTTPServer(("", port), Handler)
         server.daemon_threads = True
