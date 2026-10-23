@@ -38,4 +38,4 @@ El objetivo a largo plazo es un droide que se mueva solo por una habitación o q
 
 En total, unos 100 €. Más adelante, una segunda Zero detrás para que el dome se gire cuando pasas por su espalda, un sensor de ángulo del dome, y después que el droide entero te siga.
 
-El código todavía no es público; pondré los enlaces cuando lo sea.
+El código: https://github.com/Fernando-Beltran/DomeTracker (script, servicio para la Raspberry, pantalla web y lista de material). El comando `DM:` que necesita en ShadowMD Lite lo enlazaré cuando esté en GitHub.

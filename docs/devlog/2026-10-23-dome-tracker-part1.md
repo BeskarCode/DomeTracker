@@ -105,4 +105,4 @@ After that:
 
 Rough October 2026 prices. Optional later: a second Zero and camera for the back (~70 €), and an AS5600 with a magnet for the dome angle (~5 €).
 
-The code: the `DM:` command is on the `droid` branch of ShadowMD Lite, and the tracker is a new project, DomeTracker. Neither is public yet; links when they are.
+The code: https://github.com/Fernando-Beltran/DomeTracker (script, Raspberry Pi service, web view, parts list). The `DM:` command it needs in ShadowMD Lite is behind `ENABLE_DOME_TRACKER`; I will link it when it is on GitHub.
