@@ -19,7 +19,7 @@ This is a proof of concept, and it works on the droid. It is the first step of a
 - The dome stops if no `DM:` arrives for 300 ms (Pi off, script crashed, cable out).
 - The PS3 Nav dome stick always wins. After you move the dome by hand, `DM:` is ignored for 2 s.
 - `ENABLE_DOME_TRACKER 0` builds the sketch exactly as before.
-- **With `ENABLE_FOOT_AUTO 1`** (ShadowMD Lite's autonomous mode for ROS2D2), `DM:` only moves the dome while the autonomous mode is on: press **PS + L2** on the foot Nav first. Touching the foot stick switches it off again.
+- **With `ENABLE_ROS2D2 1`** (ShadowMD Lite's autonomous mode for ROS2D2), `DM:` only moves the dome while the autonomous mode is on: press **PS + L2** on the foot Nav first. Touching the foot stick switches it off again.
 
 ### Speed control
 - The further the face is from the centre, the faster the dome turns, between `--min` and `--max`.
